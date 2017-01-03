@@ -1,2 +1,1 @@
-# payingcloud-api-doc
-PayingCloud API 文档
+# PayingCloud API 文档

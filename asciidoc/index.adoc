@@ -1,0 +1,819 @@
+= PayingCloud API 文档
+payingcloud <support@payingcloud.cn>
+v0.2, 2017-01-03
+:description: PayingCloud 聚合支付 API
+:keywords: PayingCloud, 聚合支付, API
+:sectlinks:
+:sectanchors:
+:sectnums:
+:toclevels: 4
+:encoding: utf-8
+:imagesdir: images
+:toc: left
+:toc-title: 目录
+
+== 文档说明
+
+++++
+该文档为 PayingCloud API 接口文档
+++++
+
+=== 版本说明
+
+* 2016-12-8 +
+开始编写
+* 2016-12-22 +
+修改部分错误描述
+
+=== 全局规则
+
+* 服务器地址为 \https://api.payingcloud.cn
+* 数据传输类型为 json
+
+=== 签名规则
+
+用户可以在HTTP请求中增加 kbd:[*Authorization*] 的Header来包含签名（Signature）信息，表明这个消息已被授权。
+
+[source,java]
+.Signature
+----
+ HmacUtils.hmacSha1Hex(               //<1>
+                key,                  //<2>
+                verb + "\n" +         //<3><4>
+                resource + "\n" +     //<5>
+                body + "\n" +         //<6>
+                timestamp + "\n");    //<7>
+----
+<1> 使用hmacSha1进行签名转16进制
+<2> kbd:[*key*] 为AccessKeySecret，表示签名所需的密钥，该密匙是在控制台生成
+<3> kbd:[*verb*] 表示HTTP 请求的Method，主要有PUT，GET，POST，HEAD，DELETE等
+<4> kbd:[*\n*] 表示换行符
+<5> kbd:[*resource*] 为参数拼接串，内容为请求接口的
+kbd:[*path*]+kbd:[*?*]+kbd:[*query*]
+<6> kbd:[*body*] 表示请求体的json完整json内容
+<7> kbd:[*timestamp*] 表示时间戳表示此次操作的时间，且必须为GMT格式，
+如"Sun, 22 Nov 2015 08:16:38 GMT"，该时间戳也将加入到 *Header* 中，键为 *Date*
+
+.备注
+____
+没有请求体的HttpMethod的签名body用空字符串
+____
+
+[source,java]
+.例子
+----
+HmacUtils.hmacSha1Hex("3zKciJOwhWE4SSRUxXzCsABcIhJWd5Gb",
+                      "POST" + "\n" +
+                      "/charges?a=a&b=b&c=c" + "\n" +
+                      "{"a":"a","b":"b","c":"c"}" + "\n" +
+                      "Sun, 22 Nov 2015 08:16:38 GMT" + "\n"
+----
+
+再将签名前面加入kbd:[*accessKeyId*]进行base64编码，在结果前面加入kbd:[*Basic* + *空格*]组成kbd:[*Authorization*]
+
+[source,java]
+.Authorization
+----
+"Basic " + Base64.encodeBase64String((accessKeyId + ":" + signature).getBytes()));
+----
+
+[source,Header]
+.最终Header
+----
+Content-Type:application/json; charset=UTF-8
+Authorization:Basic NTgzMTM1NDZlZjE5MGM1MWMwYmVhYzZmOjA2NzY2NTUwMzdhOTQyZDc5M2JjOGM5YzRmNzE5M2QzZTRhYjY5YjE=
+Date:Tue, 13 Dec 2016 03:22:13 GMT
+----
+
+== API接口
+
+=== 付款接口
+
+==== 请求方式
+
+++++
+
+<font size="5"><b>POST &nbsp;&nbsp;&nbsp; /chages</b></font>
+
+++++
+
+==== 请求参数
+
+[align="center"]
+|===
+| 字段名 | 变量名 | 必填 | 类型 | 示例值 | 描述
+
+| 商户收款单号
+| chargeNo
+| 是
+| String(32)
+| 20150806125346
+| 商户系统内部订单号，要求8到32个字符、且在同一个应用下唯一，只能包含字母和数字
+
+| 商品名
+| subject
+| 是
+| String(32)
+| 测试商品名称-123456
+| 商品名称
+
+| 收款金额
+| amount
+| 是
+| Int
+| 888
+| 订单总金额，单位为分，不能小于1
+
+| 备注
+| remark
+| 否
+| String(128)
+| 订单备注：1.XXXXXXXXX,2.XXXXXXXXX
+| 订单备注
+
+| 收款渠道
+| channel
+| 是
+| String(20)
+| ALIPAY_WEB
+| 具体渠道类型详见 <<渠道类型>>
+
+| 渠道额外参数
+| extra
+| 否
+| Map<String, String>
+| "returnUrl","https://api.payingcloud.cn/returnUrl"
+| 用键值对的map存储不同渠道之间的<<渠道额外参数>>
+
+| 元数据
+| metadata
+| 否
+| String(512)
+| {"goods_id":"iphone6s_32G",
+  "wxpay_goods_id":"1002",
+  "goods_name":"iPhone6s 32G",
+  "quantity":1,
+  "price":608800,
+  "goods_category":"123789",
+  "body":"苹果手机"}
+| 将原样返回的数据
+
+| 异步通知地址
+| notifyUrl
+| 否
+| String(100)
+| \https://api.payingcloud.cn/callback
+| 支付成功后返回支付结果地址，必须为公网地址，如不填将发送到在控制台配置的Webhooks地址，如也没配置Webhooks地址的话将不发送通知
+|===
+
+==== 同步返回参数
+
+[align="center"]
+|===
+| 字段名 | 变量名 | 必填 | 类型 | 示例值 | 描述
+
+| 应用id
+| appId
+| 是
+| String(24)
+| 583128ffef190c52ccec68a8
+| 发起支付的应用id
+
+| 商户收款单号
+| chargeNo
+| 是
+| String(32)
+| 20150806125346
+| 商户系统内部订单号
+
+| 商品名
+| subject
+| 是
+| String(32)
+| 测试商品名称-123456
+| 商品名称
+
+| 备注
+| remark
+| 否
+| String(128)
+| 订单备注：1.XXXXXXXXX,2.XXXXXXXXX
+| 订单备注
+
+| 收款渠道
+| channel
+| 是
+| String(20)
+| ALIPAY_WEB
+| 具体渠道类型详见 <<渠道类型>>
+
+| 收款金额
+| amount
+| 是
+| Int
+| 888
+| 订单总金额，单位为分
+
+| 已退金额
+| refundedAmount
+| 是
+| Int
+| 100
+| 已退款总额，单位为分
+
+| 元数据
+| metadata
+| 否
+| String(512)
+| {"goods_id":"iphone6s_32G",
+  "wxpay_goods_id":"1002",
+  "goods_name":"iPhone6s 32G",
+  "quantity":1,
+  "price":608800,
+  "goods_category":"123789",
+  "body":"苹果手机"}
+| 将原样返回的数据
+
+| 交易凭证
+| credentials
+| 是
+| Map<String,String>
+| 详见<<交易凭证样例>>
+| 交易凭证,渠道最终返回的连接或者最终请求参数,用于客户端发起交易，见<<交易凭证详情>>
+
+| 状态
+| status
+| 是
+| String
+| SUCCEEDED
+| 具体详见<<订单状态>>
+
+| 错误描述
+| errorMessage
+| 否
+| String(128)
+| 退款总额超出订单金额
+| 发生错误时的错误描述参数
+
+| 创建时间
+| createdAt
+| 是
+| Date
+| 1482389429010
+| 创建退款单的时间，从1970年1月1日00：00至今的毫秒时间
+
+| 开始时间
+| startedAt
+| 否
+| Date
+| 1482389429010
+| 退款申请成功的时间，从1970年1月1日00：00至今的毫秒时间
+
+| 成功时间
+| succeededAt
+| 否
+| Date
+| 1482389429010
+| 退款成功时间，从1970年1月1日00：00至今的毫秒时间
+
+| 失败时间
+| failedAt
+| 否
+| Date
+| 1482389429010
+| 订单关闭没有后续操作的时间，从1970年1月1日00：00至今的毫秒时间
+|===
+
+
+==== 异步通知参数
+[[订单异步通知参数]]
+
+[align="center"]
+|===
+| 字段名 | 变量名 | 必填 | 类型 | 示例值 | 描述
+
+| 商户APP
+| appId
+| 是
+| String(24)
+| 583128ffef190c52ccec68a8
+| 订单的发起appId
+
+| 商户收款单号
+| chargeNo
+| 是
+| String(32)
+| 20150806125346
+| 支付时订单号
+
+| 商品名
+| subject
+| 是
+| String(32)
+| 测试商品-12314
+| 商品名称
+
+| 备注
+| remark
+| 否17
+| String(1000)
+| 退单备注：1.XXXXXXXXX,2.XXXXXXXXX
+| 退单备注
+
+| 收款渠道
+| channel
+| 是
+| String(20)
+| ALIPAY_WEB
+| 具体渠道类型详见 <<渠道类型>>
+
+| 订单金额
+| amount
+| 是
+| Int
+| 100
+| 订单总金额，单位为分
+
+| 已退金额
+| refundedAmount
+| 是
+| Int
+| 100
+| 已退款总额，单位为分
+
+| 元数据
+| metadata
+| 否
+| String(512)
+| {"goods_id":"iphone6s_32G",
+    "wxpay_goods_id":"1002",
+    "goods_name":"iPhone6s 32G",
+    "quantity":1,
+    "price":608800,
+    "goods_category":"123789",
+    "body":"苹果手机"}
+| 元数据，用于携带自定义数据,原样返回
+
+| 状态
+| status
+| 是
+| String
+| SUCCEEDED
+| 具体详见<<订单状态>>
+
+| 错误描述
+| errorMessage
+| 否
+| String(128)
+| 退款总额超出订单金额
+| 发生错误时的错误描述参数
+
+| 创建时间
+| createdAt
+| 是
+| Date
+| 1482389429010
+| 创建退款单的时间，从1970年1月1日00：00至今的毫秒时间
+
+| 开始时间
+| startedAt
+| 否
+| Date
+| 1482389429010
+| 退款申请成功的时间，从1970年1月1日00：00至今的毫秒时间
+
+| 成功时间
+| succeededAt
+| 否
+| Date
+| 1482389429010
+| 退款成功时间，从1970年1月1日00：00至今的毫秒时间
+
+| 失败时间
+| failedAt
+| 否
+| Date
+| 1482389429010
+| 订单关闭没有后续操作的时间，从1970年1月1日00：00至今的毫秒时间
+|===
+
+=== 退款接口
+
+==== 请求方式
+
+++++
+
+<font size="4">POST &nbsp;&nbsp;&nbsp; /refunds</font>
+
+++++
+
+==== 请求参数
+
+[align="center"]
+|===
+| 字段名 | 变量名 | 必填 | 类型 | 示例值 | 描述
+
+| 商户收款单号
+| chargeNo
+| 是
+| String(32)
+| 20150806125346
+| 支付时订单号
+
+| 退款单号
+| refundNo
+| 是
+| String(32)
+| 1217752501201407033233368018
+| 商户系统内部的退款单号，商户系统内部唯一，同一退款单号多次请求只退一笔
+
+| 退款金额
+| amount
+| 是
+| Int
+| 100
+| 退款总金额，订单总金额，单位为分，只能为整数
+
+| 备注
+| remark
+| 否
+| String(128)
+| 退单备注：1.XXXXXXXXX,2.XXXXXXXXX
+| 退单备注
+
+| 元数据
+| metadata
+| 否
+| String(512)
+| {"goods_id":"iphone6s_32G",
+    "wxpay_goods_id":"1002",
+    "goods_name":"iPhone6s 32G",
+    "quantity":1,
+    "price":608800,
+    "goods_category":"123789",
+    "body":"苹果手机"}
+| 元数据，用于携带自定义数据,原样返回
+
+| 异步通知地址
+| notifyUrl
+| 是
+| String(100)
+| \https://api.payingcloud.cn/callback
+| 支付成功后返回支付结果地址，必须为公网地址，如不填将发送到在控制台配置的Webhooks地址，如也没配置Webhooks地址的话将不发送通知
+|===
+
+==== 返回结果
+[[退款同步参数]]
+
+[align="center"]
+|===
+| 字段名 | 变量名 | 必填 | 类型 | 示例值 | 描述
+
+| 商户app
+| appId
+| 是
+| String(24)
+| 583128ffef190c52ccec68a8
+| 退款单的发起app
+
+| 商户退款单号
+| refundNo
+| 是
+| String(32)
+| 1217752501201407033233368018
+| 商户系统内部的退款单号，商户系统内部唯一，同一退款单号多次请求只退一笔
+
+| 商户收款单号
+| chargeNo
+| 是
+| String(32)
+| 20150806125346
+| 支付时订单号
+
+| 收款渠道
+| channel
+| 是
+| String(20)
+| ALIPAY_WEB
+| 具体渠道类型详见 <<渠道类型>>
+
+| 退款金额
+| amount
+| 是
+| Int
+| 100
+| 退款总金额，订单总金额，单位为分，只能为整数
+
+| 备注
+| remark
+| 否
+| String(128)
+| 退单备注：1.XXXXXXXXX,2.XXXXXXXXX
+| 退单备注
+
+| 元数据
+| metadata
+| 否
+| String(512)
+| {"goods_id":"iphone6s_32G",
+    "wxpay_goods_id":"1002",
+    "goods_name":"iPhone6s 32G",
+    "quantity":1,
+    "price":608800,
+    "goods_category":"123789",
+    "body":"苹果手机"}
+| 元数据，用于携带自定义数据,原样返回
+
+| 状态
+| status
+| 是
+| String
+| SUCCEEDED
+| 具体详见<<订单状态>>
+
+| 错误描述
+| errorMessage
+| 否
+| String(128)
+| 退款总额超出订单金额
+| 发生错误时的错误描述参数
+
+| 创建时间
+| createdAt
+| 是
+| Date
+| 1482389429010
+| 创建退款单的时间，从1970年1月1日00：00至今的毫秒时间
+
+| 开始时间
+| startedAt
+| 否
+| Date
+| 1482389429010
+| 退款申请成功的时间，从1970年1月1日00：00至今的毫秒时间
+
+| 成功时间
+| succeededAt
+| 否
+| Date
+| 1482389429010
+| 退款成功时间，从1970年1月1日00：00至今的毫秒时间
+
+| 失败时间
+| failedAt
+| 否
+| Date
+| 1482389429010
+| 订单关闭没有后续操作的时间，从1970年1月1日00：00至今的毫秒时间
+|===
+
+==== 异步通知参数
+
+和<<退款同步参数>>相同
+
+=== 订单查询
+
+==== 请求方式
+
+++++
+
+<font size="4">GET &nbsp;&nbsp;&nbsp; /chages/{chargeNo}</font>
+
+++++
+
+==== 请求参数
+
+[align="center"]
+|===
+| 字段名 | 变量名 | 必填 | 类型 | 示例值 | 描述
+
+| 商户订单号
+| chargeNo
+| 是
+| String(32)
+| 20150806125346
+| 是在请求连接最后的部分添加的参数，是url参数
+|===
+
+==== 返回参数
+
+[big]#和<<订单异步通知参数>>参数相同#
+
+=== 退款单查询
+
+==== 请求方式
+
+++++
+
+<font size="4">GET &nbsp;&nbsp;&nbsp; /refunds/{refundNo}</font>
+
+++++
+
+==== 请求参数
+
+[align="center"]
+|===
+| 字段名 | 变量名 | 必填 | 类型 | 示例值 | 描述
+
+| 商户退款号
+| refundNo
+| 是
+| String(32)
+| 20150806125346
+| 是在请求连接最后的部分添加的参数，是url参数
+|===
+
+==== 返回参数
+
+返回参数和<<退款同步参数>>相同
+
+== 备注
+
+[[渠道类型]]
+
+=== 渠道类型表
+
+[align="center"]
+|===
+| 渠道名称 | 传输参数
+
+| 支付宝APP支付
+| *ALIPAY_APP*
+
+| 支付宝即时到账
+| *ALIPAY_DIRECT*
+
+| 支付宝扫描付
+| *ALIPAY_QR*
+
+| 支付宝手机网页支付
+| *ALIPAY_WAP*
+
+| 微信APP支付
+| *WXPAY_APP*
+
+| 微信公众号支付
+| *WXPAY_JSAPI*
+
+| 微信扫码支付
+| *WXPAY_NATIVE*
+
+| 银联手机控件支付
+| *UPACP_APP*
+
+| 银联网关支付
+| *UPACP_GATEWAY*
+
+| 京东钱包PC网页支付
+| *JDPAY_WEB*
+
+| 京东钱包移动网页支付
+| *JDPAY_WAP*
+
+| 京东钱包扫码支付
+| *JDPAY_QR*
+
+| 百度钱包PC网页支付
+| *BDPAY_WEB*
+
+| 百度钱包移动网页支付
+| *BDPAY_WAP*
+
+| 百度钱包扫码支付
+| *BDPAY_QR*
+
+| 首信易支付PC网页支付
+| *BJPAY_WEB*
+
+| 首信易支付微信支付
+| *BJPAY_WX*
+
+| 首信易支付微信支付
+| *CHINAPAY_WEB*
+
+| 易宝PC网页支付
+| *YEEPAY_WEB*
+
+| 易宝移动网页支付
+| *YEEPAY_WAP*
+
+| 快付通微信扫码支付
+| *KFTPAY_WX*
+
+| 快付通支付宝扫码支付
+| *KFTPAY_ALI*
+|===
+
+[[交易凭证样例]]
+=== 交易凭证样例
+
+[source,json]
+----
+"url":"<form name=\"punchout_form\"method=\"post\" action=\"https://pay.yizhifubj.com/prs/user_payment.checkit?v_md5info=b00a57dc732366cbfed3da03fe064af5&v_orderstatus=1&v_rcvname=9466&v_moneytype=0&v_oid=20161222-9466-585b77b5ab5c986f049a0faa&v_ymd=20161222&v_url=http%3A%2F%2F127.0.0.1%3A9000%2Forder%2Fcharge%2Freturn&v_rcvaddr=9466&v_ordername=9466&v_rcvtel=9466&v_mid=9466&v_amount=0.01&v_rcvpost=9466\">\n<input type=\"submit\" value=\"[0xe7][0xab][0x8b][0xe5][0x8d][0xb3][0xe6][0x94][0xaf][0xe4][0xbb][0x98]\" style=\"display:none\" >\n</form>\n<script>document.forms[0].submit();</script>"
+----
+
+[[交易凭证详情]]
+=== 交易凭证详情
+
+* BDPAY_WEB
+* BDPAY_WAP
+** 从credentials中获取键: *url*
+
+[source,java]
+----
+servletResponse.sendRedirect(charge.getCredentials().get("url"));
+----
+
+* ALIPAY_DIRECT
+* BJPAY_WEB
+* CHINAPAY_WEB
+* JDPAY_WEB
+* JDPAY_WAP
+* YEEPAY_WAP
+* ALIPAY_WAP
+** 从credentials中获取键: *html*(utf-8)
+
+[source,java]
+----
+servletResponse.setContentType("text/html;charset=UTF-8");
+servletResponse.getWriter().write(charge.getCredentials().get("html"));
+----
+
+* YEEPAY_WEB
+** 从credentials中获取键: *html*(gbk)
+
+[source,java]
+----
+servletResponse.setContentType("text/html;charset=gbk");
+servletResponse.getWriter().write(charge.getCredentials().get("html"));
+----
+
+* BDPAY_QR
+** 从credentials中获取键: *url*(图片地址)
+
+* WXPAY_NATIVE
+* BJPAY_WX
+* ALIPAY_QR
+* KFTPAY_WX
+* KFTPAY_ALI
+* JDPAY_QR
+** 从credentials中获取键: *codeUrl*(生成二维码的字符串)
+
+* WXPAY_JSAPI
+** 从credentials中获取键:
+*** *appId*
+*** *timeStamp*
+*** *nonceStr*
+*** *package*
+*** *signType*
+*** *paySign*
+
+在页面调用微信jsSDk
+详情见 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6[微信公众号h5调用文档]
+
+[[渠道额外参数]]
+=== 渠道额外参数
+
+* returnUrl : 同步返回地址
+* openId : 微信公众号支付必填
+
+[[订单状态]]
+=== 订单状态表
+
+[align="center"]
+|===
+| 参数名 | 含义
+
+| *CREATED*
+| 已创建
+
+| *STARTED*
+| 开始处理
+
+| *SUCCEEDED*
+| 支付成功
+
+| *FAILED*
+| 支付失败
+|===
+
+
+[[退款状态]]
+=== 退款状态表
+
+[align="center"]
+|===
+| 参数名 | 含义
+
+| *CREATED*
+| 已创建
+
+| *STARTED*
+| 开始处理
+
+| *SUCCEEDED*
+| 退款成功
+
+| *FAILED*
+| 退款失败
+|===
