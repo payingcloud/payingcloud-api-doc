@@ -419,6 +419,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -522,45 +523,52 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_签名规则"><a class="anchor" href="#_签名规则"></a>1.3. 签名规则</h3>
 <div class="paragraph">
-<p>用户可以在HTTP请求中增加 kbd:[<strong>Authorization</strong>] 的Header来包含签名（Signature）信息，表明这个消息已被授权。</p>
+<p>用户可以在HTTP请求中增加 <kbd><strong>Authorization</strong></kbd> 的Header来包含签名（Signature）信息，表明这个消息已被授权。</p>
 </div>
 <div class="listingblock">
 <div class="title">Signature</div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java"> HmacUtils.hmacSha1Hex(               <b class="conum">(1)</b>
-                key,                  <b class="conum">(2)</b>
-                verb + "\n" +         <b class="conum">(3)</b><b class="conum">(4)</b>
-                resource + "\n" +     <b class="conum">(5)</b>
-                body + "\n" +         <b class="conum">(6)</b>
-                timestamp + "\n");    <b class="conum">(7)</b></code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java"> HmacUtils.hmacSha1Hex(               <i class="conum" data-value="1"></i><b>(1)</b>
+                key,                  <i class="conum" data-value="2"></i><b>(2)</b>
+                verb + "\n" +         <i class="conum" data-value="3"></i><b>(3)</b><i class="conum" data-value="4"></i><b>(4)</b>
+                resource + "\n" +     <i class="conum" data-value="5"></i><b>(5)</b>
+                body + "\n" +         <i class="conum" data-value="6"></i><b>(6)</b>
+                timestamp + "\n");    <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>使用hmacSha1进行签名转16进制</p>
-</li>
-<li>
-<p>kbd:[<strong>key</strong>] 为AccessKeySecret，表示签名所需的密钥，该密匙是在控制台生成</p>
-</li>
-<li>
-<p>kbd:[<strong>verb</strong>] 表示HTTP 请求的Method，主要有PUT，GET，POST，HEAD，DELETE等</p>
-</li>
-<li>
-<p>kbd:[<strong>\n</strong>] 表示换行符</p>
-</li>
-<li>
-<p>kbd:[<strong>resource</strong>] 为参数拼接串，内容为请求接口的
-kbd:[<strong>path</strong>]+kbd:[<strong>?</strong>]+kbd:[<strong>query</strong>]</p>
-</li>
-<li>
-<p>kbd:[<strong>body</strong>] 表示请求体的json完整json内容</p>
-</li>
-<li>
-<p>kbd:[<strong>timestamp</strong>] 表示时间戳表示此次操作的时间，且必须为GMT格式，
-如"Sun, 22 Nov 2015 08:16:38 GMT"，该时间戳也将加入到 <strong>Header</strong> 中，键为 <strong>Date</strong></p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>使用hmacSha1进行签名转16进制</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><kbd><strong>key</strong></kbd> 为AccessKeySecret，表示签名所需的密钥，该密匙是在控制台生成</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><kbd><strong>verb</strong></kbd> 表示HTTP 请求的Method，主要有PUT，GET，POST，HEAD，DELETE等</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><kbd><strong>\n</strong></kbd> 表示换行符</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><kbd><strong>resource</strong></kbd> 为参数拼接串，内容为请求接口的
+<kbd><strong>path</strong></kbd>+<kbd><strong>?</strong></kbd>+<kbd><strong>query</strong></kbd></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><kbd><strong>body</strong></kbd> 表示请求体的json完整json内容</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><kbd><strong>timestamp</strong></kbd> 表示时间戳表示此次操作的时间，且必须为GMT格式，
+如"Sun, 22 Nov 2015 08:16:38 GMT"，该时间戳也将加入到 <strong>Header</strong> 中，键为 <strong>Date</strong></td>
+</tr>
+</table>
 </div>
 <div class="quoteblock">
 <div class="title">备注</div>
@@ -581,7 +589,7 @@ kbd:[<strong>path</strong>]+kbd:[<strong>?</strong>]+kbd:[<strong>query</strong>
 </div>
 </div>
 <div class="paragraph">
-<p>再将签名前面加入kbd:[<strong>accessKeyId</strong>]进行base64编码，在结果前面加入kbd:[<strong>Basic</strong> + <strong>空格</strong>]组成kbd:[<strong>Authorization</strong>]</p>
+<p>再将签名前面加入<kbd><strong>accessKeyId</strong></kbd>进行base64编码，在结果前面加入<span class="keyseq"><kbd><strong>Basic</strong></kbd>+<kbd><strong>空格</strong></kbd></span>组成<kbd><strong>Authorization</strong></kbd></p>
 </div>
 <div class="listingblock">
 <div class="title">Authorization</div>
@@ -1679,7 +1687,7 @@ servletResponse.getWriter().write(charge.getCredentials().get("html"));</code></
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2017-01-03 12:23:33 +08:00
+Last updated 2017-01-03 12:46:16 +08:00
 </div>
 </div>
 </body>

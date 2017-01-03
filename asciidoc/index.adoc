@@ -1,16 +1,21 @@
 = PayingCloud API 文档
 payingcloud <support@payingcloud.cn>
 v0.2, 2017-01-03
+:doctype: article
 :description: PayingCloud 聚合支付 API
 :keywords: PayingCloud, 聚合支付, API
 :sectlinks:
 :sectanchors:
 :sectnums:
+:source-highlighter: coderay
+:icons: font
 :toclevels: 4
 :encoding: utf-8
 :imagesdir: images
 :toc: left
 :toc-title: 目录
+:experimental:
+:font: Microsoft YaHei
 
 == 文档说明
 
