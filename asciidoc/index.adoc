@@ -95,13 +95,9 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT
 === 付款接口
 
 ==== 请求方式
-
-++++
-
-<font size="5"><b>POST &nbsp;&nbsp;&nbsp; /chages</b></font>
-
-++++
-
+----
+POST /charges
+----
 ==== 请求参数
 
 [align="center"]
@@ -405,13 +401,9 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT
 === 退款接口
 
 ==== 请求方式
-
-++++
-
-<font size="4">POST &nbsp;&nbsp;&nbsp; /refunds</font>
-
-++++
-
+----
+POST /refunds
+----
 ==== 请求参数
 
 [align="center"]
@@ -579,13 +571,9 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT
 === 订单查询
 
 ==== 请求方式
-
-++++
-
-<font size="4">GET &nbsp;&nbsp;&nbsp; /chages/{chargeNo}</font>
-
-++++
-
+----
+GET /charges/{chargeNo}
+----
 ==== 请求参数
 
 [align="center"]
@@ -607,13 +595,9 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT
 === 退款单查询
 
 ==== 请求方式
-
-++++
-
-<font size="4">GET &nbsp;&nbsp;&nbsp; /refunds/{refundNo}</font>
-
-++++
-
+----
+GET /refunds/{refundNo}
+----
 ==== 请求参数
 
 [align="center"]
