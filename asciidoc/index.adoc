@@ -691,6 +691,28 @@ GET /refunds/{refundNo}
 
 | 快付通支付宝扫码支付
 | *KFTPAY_ALI*
+
+| 民生银行T0清算支付宝扫码支付
+| *CMBCPAY_T0_ALI*
+
+| 民生银行T1清算支付宝扫码支付
+| *CMBCPAY_T1_ALI*
+
+| 民生银行T0清算微信扫码支付
+| *CMBCPAY_T0_WX*
+
+| 民生银行T1清算微信扫码支付
+| *CMBCPAY_T1_WX*
+
+| 民生银行T0清算QQ扫码支付
+| *CMBCPAY_T1_QQ*
+
+| 民生银行T0清算QQ扫码支付
+| *CMBCPAY_T1_QQ*
+
+| 微众银行微信扫码支付
+| *WEBANKPAY_WX_QR*
+
 |===
 
 [[交易凭证样例]]
@@ -746,6 +768,13 @@ servletResponse.getWriter().write(charge.getCredentials().get("html"));
 * KFTPAY_WX
 * KFTPAY_ALI
 * JDPAY_QR
+* CMBCPAY_T0_ALI
+* CMBCPAY_T1_ALI
+* CMBCPAY_T0_WX
+* CMBCPAY_T1_WX
+* CMBCPAY_T0_QQ
+* CMBCPAY_T1_QQ
+* WEBANKPAY_WX_QR
 ** 从credentials中获取键: *codeUrl*(生成二维码的字符串)
 
 * WXPAY_JSAPI
