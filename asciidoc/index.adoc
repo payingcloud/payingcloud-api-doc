@@ -1,6 +1,6 @@
-= PayingCloud API 文档
-payingcloud <support@payingcloud.cn>
-v0.2, 2017-01-03
+= Paid API 文档
+paid
+v0.3, 2017-05-19
 :doctype: article
 :description: PayingCloud 聚合支付 API
 :keywords: PayingCloud, 聚合支付, API
@@ -29,6 +29,8 @@ v0.2, 2017-01-03
 开始编写
 * 2016-12-22 +
 修改部分错误描述
+* 2017-5-19 +
+添加多个银行支付渠道
 
 === 全局规则
 
@@ -699,10 +701,16 @@ GET /refunds/{refundNo}
 | *CMBCPAY_T1_ALI*
 
 | 民生银行T0清算微信扫码支付
-| *CMBCPAY_T0_WX*
+| *CMBCPAY_T0_WX_QR*
 
 | 民生银行T1清算微信扫码支付
-| *CMBCPAY_T1_WX*
+| *CMBCPAY_T1_WX_QR*
+
+| 民生银行T0清算微信公众号支付
+| *CMBCPAY_T0_WX_JSAPI*
+
+| 民生银行T1清算微信公众号支付
+| *CMBCPAY_T1_WX_JSAPI*
 
 | 民生银行T0清算QQ扫码支付
 | *CMBCPAY_T1_QQ*
@@ -712,6 +720,9 @@ GET /refunds/{refundNo}
 
 | 微众银行微信扫码支付
 | *WEBANKPAY_WX_QR*
+
+| 微众银行微信公众号支付
+| *WEBANKPAY_WX_JSAPI*
 
 |===
 
@@ -770,14 +781,17 @@ servletResponse.getWriter().write(charge.getCredentials().get("html"));
 * JDPAY_QR
 * CMBCPAY_T0_ALI
 * CMBCPAY_T1_ALI
-* CMBCPAY_T0_WX
-* CMBCPAY_T1_WX
+* CMBCPAY_T0_WX_QR
+* CMBCPAY_T1_WX_QR
 * CMBCPAY_T0_QQ
 * CMBCPAY_T1_QQ
 * WEBANKPAY_WX_QR
 ** 从credentials中获取键: *codeUrl*(生成二维码的字符串)
 
 * WXPAY_JSAPI
+* CMBCPAY_T0_WX_JSAPI
+* CMBCPAY_T1_WX_JSAPI
+* WEBANKPAY_WX_JSAPI
 ** 从credentials中获取键:
 *** *appId*
 *** *timeStamp*
@@ -794,6 +808,7 @@ servletResponse.getWriter().write(charge.getCredentials().get("html"));
 
 * returnUrl : 同步返回地址
 * openId : 微信公众号支付必填
+* userId ，subAppId :民生银行和微众银行公众号支付必填
 
 [[订单状态]]
 === 订单状态表
@@ -815,7 +830,6 @@ servletResponse.getWriter().write(charge.getCredentials().get("html"));
 | 支付失败
 |===
 
-
 [[退款状态]]
 === 退款状态表
 
@@ -835,3 +849,8 @@ servletResponse.getWriter().write(charge.getCredentials().get("html"));
 | *FAILED*
 | 退款失败
 |===
+
+=== 其他常见问题
+==== 微信公众号支付的相关问题：
+1.调起支付的公众号必须是对应企业公众号的APPID，并且通过微信认证，以及请求的openId必须是该公众号下的。 +
+2.支付目录：支付目录域名需通过ICP备案，头部要包含http或https，需细化到二级或三级目录，以左斜杠“/”结尾。
