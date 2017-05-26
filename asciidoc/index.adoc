@@ -3,7 +3,7 @@ paid
 v0.3, 2017-05-19
 :doctype: article
 :description: PayingCloud 聚合支付 API
-:keywords: PayingCloud, 聚合支付, API
+:keywords: PayingCloud,聚合支付,API
 :sectlinks:
 :sectanchors:
 :sectnums:
@@ -118,7 +118,7 @@ POST /charges
 | 是
 | String(32)
 | 测试商品名称-123456
-| 商品名称
+| 展示在收银台的商品名称
 
 | 收款金额
 | amount
