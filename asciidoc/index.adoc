@@ -807,8 +807,7 @@ servletResponse.getWriter().write(charge.getCredentials().get("html"));
 === 渠道额外参数
 
 * returnUrl : 同步返回地址
-* openId : 微信公众号支付必填
-* userId ，subAppId :民生银行和微众银行公众号支付必填
+* openId : 公众号支付必填
 
 [[订单状态]]
 === 订单状态表
