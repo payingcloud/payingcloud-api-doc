@@ -646,11 +646,11 @@ GET /refunds/{refundNo}
 | 民生银行T1清算微信公众号支付
 | *CMBCPAY_T1_WX_JSAPI*
 
-| 民生银行T0清算QQ扫码支付
+| 民生银行T1清算QQ扫码支付
 | *CMBCPAY_T1_QQ*
 
 | 民生银行T0清算QQ扫码支付
-| *CMBCPAY_T1_QQ*
+| *CMBCPAY_T0_QQ*
 
 | 微众银行微信扫码支付
 | *WEBANKPAY_WX_QR*
