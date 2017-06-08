@@ -802,7 +802,7 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
   "price":608800,
   "goods_category":"123789",
   "body":"苹果手机"}</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">将原样返回的数据</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">将原样返回的数据，如是类似json格式的数据也必须转换为字符串模式，例如最外层加双引号</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">异步通知地址</p></td>
@@ -1186,7 +1186,7 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
     "price":608800,
     "goods_category":"123789",
     "body":"苹果手机"}</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">元数据，用于携带自定义数据,原样返回</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">异步通知地址</p></td>
@@ -1461,6 +1461,46 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算支付宝扫码支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T0_ALI</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T1清算支付宝扫码支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_ALI</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算微信扫码支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T0_WX_QR</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T1清算微信扫码支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_WX_QR</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算微信公众号支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T0_WX_JSAPI</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T1清算微信公众号支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_WX_JSAPI</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算QQ扫码支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_QQ</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算QQ扫码支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_QQ</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">微众银行微信扫码支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>WEBANKPAY_WX_QR</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">微众银行微信公众号支付</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>WEBANKPAY_WX_JSAPI</strong></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">支付宝APP支付</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ALIPAY_APP</strong></p></td>
 </tr>
@@ -1547,46 +1587,6 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">快付通支付宝扫码支付</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>KFTPAY_ALI</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算支付宝扫码支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T0_ALI</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T1清算支付宝扫码支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_ALI</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算微信扫码支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T0_WX_QR</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T1清算微信扫码支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_WX_QR</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算微信公众号支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T0_WX_JSAPI</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T1清算微信公众号支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_WX_JSAPI</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算QQ扫码支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_QQ</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">民生银行T0清算QQ扫码支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CMBCPAY_T1_QQ</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">微众银行微信扫码支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>WEBANKPAY_WX_QR</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">微众银行微信公众号支付</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>WEBANKPAY_WX_JSAPI</strong></p></td>
 </tr>
 </tbody>
 </table>
@@ -1882,7 +1882,7 @@ servletResponse.getWriter().write(charge.getCredentials().get(<span class="strin
 <div id="footer">
 <div id="footer-text">
 Version 0.3<br>
-Last updated 2017-05-26 17:34:57 +08:00
+Last updated 2017-06-08 10:06:45 +08:00
 </div>
 </div>
 </body>

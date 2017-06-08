@@ -159,7 +159,7 @@ POST /charges
   "price":608800,
   "goods_category":"123789",
   "body":"苹果手机"}
-| 将原样返回的数据
+| 将原样返回的数据，如是类似json格式的数据也必须转换为字符串模式，例如最外层加双引号
 
 | 异步通知地址
 | notifyUrl
@@ -451,7 +451,7 @@ POST /refunds
     "price":608800,
     "goods_category":"123789",
     "body":"苹果手机"}
-| 元数据，用于携带自定义数据,原样返回
+| 元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式
 
 | 异步通知地址
 | notifyUrl
@@ -628,6 +628,36 @@ GET /refunds/{refundNo}
 |===
 | 渠道名称 | 传输参数
 
+| 民生银行T0清算支付宝扫码支付
+| *CMBCPAY_T0_ALI*
+
+| 民生银行T1清算支付宝扫码支付
+| *CMBCPAY_T1_ALI*
+
+| 民生银行T0清算微信扫码支付
+| *CMBCPAY_T0_WX_QR*
+
+| 民生银行T1清算微信扫码支付
+| *CMBCPAY_T1_WX_QR*
+
+| 民生银行T0清算微信公众号支付
+| *CMBCPAY_T0_WX_JSAPI*
+
+| 民生银行T1清算微信公众号支付
+| *CMBCPAY_T1_WX_JSAPI*
+
+| 民生银行T0清算QQ扫码支付
+| *CMBCPAY_T1_QQ*
+
+| 民生银行T0清算QQ扫码支付
+| *CMBCPAY_T1_QQ*
+
+| 微众银行微信扫码支付
+| *WEBANKPAY_WX_QR*
+
+| 微众银行微信公众号支付
+| *WEBANKPAY_WX_JSAPI*
+
 | 支付宝APP支付
 | *ALIPAY_APP*
 
@@ -693,36 +723,6 @@ GET /refunds/{refundNo}
 
 | 快付通支付宝扫码支付
 | *KFTPAY_ALI*
-
-| 民生银行T0清算支付宝扫码支付
-| *CMBCPAY_T0_ALI*
-
-| 民生银行T1清算支付宝扫码支付
-| *CMBCPAY_T1_ALI*
-
-| 民生银行T0清算微信扫码支付
-| *CMBCPAY_T0_WX_QR*
-
-| 民生银行T1清算微信扫码支付
-| *CMBCPAY_T1_WX_QR*
-
-| 民生银行T0清算微信公众号支付
-| *CMBCPAY_T0_WX_JSAPI*
-
-| 民生银行T1清算微信公众号支付
-| *CMBCPAY_T1_WX_JSAPI*
-
-| 民生银行T0清算QQ扫码支付
-| *CMBCPAY_T1_QQ*
-
-| 民生银行T0清算QQ扫码支付
-| *CMBCPAY_T1_QQ*
-
-| 微众银行微信扫码支付
-| *WEBANKPAY_WX_QR*
-
-| 微众银行微信公众号支付
-| *WEBANKPAY_WX_JSAPI*
 
 |===
 
