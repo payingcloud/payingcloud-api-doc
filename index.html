@@ -528,6 +528,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_版本说明">1.1. 版本说明</a></li>
 <li><a href="#_全局规则">1.2. 全局规则</a></li>
 <li><a href="#_签名规则">1.3. 签名规则</a></li>
+<li><a href="#_验签规则">1.4. 验签规则</a></li>
 </ul>
 </li>
 <li><a href="#_api接口">2. API接口</a>
@@ -606,7 +607,7 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li>
 <p>2017-6-9<br>
-添加支付流程图</p>
+添加支付流程图，添加验签规则</p>
 </li>
 </ul>
 </div>
@@ -635,7 +636,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="listingblock">
 <div class="title">Signature</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"> HmacUtils.hmacSha1Hex(               <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="CodeRay highlight"><code data-lang="Java"> HmacUtils.hmacSha1Hex(               <i class="conum" data-value="1"></i><b>(1)</b>
                 key,                  <i class="conum" data-value="2"></i><b>(2)</b>
                 verb + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span> +         <i class="conum" data-value="3"></i><b>(3)</b> <i class="conum" data-value="4"></i><b>(4)</b>
                 resource + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span> +     <i class="conum" data-value="5"></i><b>(5)</b>
@@ -686,9 +687,9 @@ table.CodeRay td.code>pre{padding:0}
 </blockquote>
 </div>
 <div class="listingblock">
-<div class="title">例子</div>
+<div class="title">代码示例</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">HmacUtils.hmacSha1Hex(<span class="string"><span class="delimiter">&quot;</span><span class="content">3zKciJOwhWE4SSRUxXzCsABcIhJWd5Gb</span><span class="delimiter">&quot;</span></span>,
+<pre class="CodeRay highlight"><code data-lang="Java">HmacUtils.hmacSha1Hex(<span class="string"><span class="delimiter">&quot;</span><span class="content">3zKciJOwhWE4SSRUxXzCsABcIhJWd5Gb</span><span class="delimiter">&quot;</span></span>,
                       <span class="string"><span class="delimiter">&quot;</span><span class="content">POST</span><span class="delimiter">&quot;</span></span> + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span> +
                       <span class="string"><span class="delimiter">&quot;</span><span class="content">/charges?a=a&amp;b=b&amp;c=c</span><span class="delimiter">&quot;</span></span> + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span> +
                       <span class="string"><span class="delimiter">&quot;</span><span class="content">{</span><span class="delimiter">&quot;</span></span>a<span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span>a<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>b<span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span>b<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>c<span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span>c<span class="string"><span class="delimiter">&quot;</span><span class="content">}</span><span class="delimiter">&quot;</span></span> + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span> +
@@ -710,6 +711,39 @@ table.CodeRay td.code>pre{padding:0}
 <pre class="CodeRay highlight"><code data-lang="Header">Content-Type:application/json; charset=UTF-8
 Authorization:Basic NTgzMTM1NDZlZjE5MGM1MWMwYmVhYzZmOjA2NzY2NTUwMzdhOTQyZDc5M2JjOGM5YzRmNzE5M2QzZTRhYjY5YjE=
 Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_验签规则"><a class="anchor" href="#_验签规则"></a>1.4. 验签规则</h3>
+<div class="paragraph">
+<p>为防止黑客伪造交易结果给商户造成损失，PayingCloud对所有发给商户的交易结果异步通知都进行了RSA签名，并将签名进行Base64编码后放在Http请求头 <kbd><strong>sign</strong></kbd> 中，开发者需要使用SHA1WithRSA算法和PayingCloud提供的RSA公钥对其进行验证：<br></p>
+</div>
+<div class="listingblock">
+<div class="title">代码示例</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Java"><span class="comment">// 从异步通知请求头中获取签名</span>
+<span class="predefined-type">String</span> sign = request.getHeader(<span class="string"><span class="delimiter">&quot;</span><span class="content">sign</span><span class="delimiter">&quot;</span></span>);
+<span class="comment">// 对签名Base64解码</span>
+<span class="type">byte</span><span class="type">[]</span> signBytes = Base64.decodeBase64(sign)
+<span class="comment">// 获取异步通知请求体</span>
+<span class="predefined-type">String</span> content = ...
+<span class="comment">// 对请求体进行UTF-8字符解码</span>
+byte<span class="type">[]</span> contentBytes = content.getBytes(<span class="string"><span class="delimiter">&quot;</span><span class="content">UTF-8</span><span class="delimiter">&quot;</span></span>)
+<span class="comment">// 采用SHA1WithRSA算法进行验证</span>
+<span class="predefined-type">KeyFactory</span> keyFactory = <span class="predefined-type">KeyFactory</span>.getInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">RSA</span><span class="delimiter">&quot;</span></span>);
+<span class="type">byte</span><span class="type">[]</span> encodedKey = Base64.decodeBase64(PayingCloud.DEFAULT_PUBLIC_KEY); <span class="comment">// 使用PayingCloud提供的RSA公钥</span>
+<span class="predefined-type">PublicKey</span> key = keyFactory.generatePublic(<span class="keyword">new</span> <span class="predefined-type">X509EncodedKeySpec</span>(encodedKey));
+<span class="predefined-type">Signature</span> signature = <span class="predefined-type">Signature</span>.getInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">SHA1WithRSA</span><span class="delimiter">&quot;</span></span>); <span class="comment">// 验签算法SHA1WithRSA</span>
+signature.initVerify(key);
+signature.update(contentBytes);
+<span class="keyword">return</span> signature.verify(signBytes);</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">PayingCloud RSA公钥</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="PublicKey">MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPymtLbRkHgvVfUT933LrwWns6YZHLPpT1pP9TKJ+cgIZiQwZ4mtqoqPHSVtiT5HA8fwFzWuJ/6qWaQhER7TOISUFUHZlHyBjNK/Z5px6PNB7rT4OrLP0KuZ7nuX5qdnOKuAbrj1MBLSinOHQ8tDJhPrPKxuZlKw3SeL5auHlKWwIDAQAB</code></pre>
 </div>
 </div>
 </div>
@@ -1815,7 +1849,7 @@ servletResponse.getWriter().write(charge.getCredentials().get(<span class="strin
 <div id="footer">
 <div id="footer-text">
 Version 0.4<br>
-Last updated 2017-06-09 12:18:55 +08:00
+Last updated 2017-06-09 14:06:34 +08:00
 </div>
 </div>
 </body>

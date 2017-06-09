@@ -32,7 +32,7 @@ v0.4, 2017-06-09
 * 2017-5-19 +
 添加多个银行支付渠道
 * 2017-6-9 +
-添加支付流程图
+添加支付流程图，添加验签规则
 
 === 全局规则
 
@@ -44,8 +44,8 @@ v0.4, 2017-06-09
 
 用户可以在HTTP请求中增加 kbd:[*Authorization*] 的Header来包含签名（Signature）信息，表明这个消息已被授权。
 
-[source,java]
 .Signature
+[source,Java]
 ----
  HmacUtils.hmacSha1Hex(               //<1>
                 key,                  //<2>
@@ -69,8 +69,8 @@ ____
 没有请求体的HttpMethod的签名body用空字符串
 ____
 
-[source,java]
-.例子
+.代码示例
+[source,Java]
 ----
 HmacUtils.hmacSha1Hex("3zKciJOwhWE4SSRUxXzCsABcIhJWd5Gb",
                       "POST" + "\n" +
@@ -81,18 +81,48 @@ HmacUtils.hmacSha1Hex("3zKciJOwhWE4SSRUxXzCsABcIhJWd5Gb",
 
 再将签名前面加入kbd:[*accessKeyId*]进行base64编码，在结果前面加入kbd:[*Basic* + *空格*]组成kbd:[*Authorization*]
 
-[source,java]
 .Authorization
+[source,java]
 ----
 "Basic " + Base64.encodeBase64String((accessKeyId + ":" + signature).getBytes()));
 ----
 
-[source,Header]
 .最终Header
+[source,Header]
 ----
 Content-Type:application/json; charset=UTF-8
 Authorization:Basic NTgzMTM1NDZlZjE5MGM1MWMwYmVhYzZmOjA2NzY2NTUwMzdhOTQyZDc5M2JjOGM5YzRmNzE5M2QzZTRhYjY5YjE=
 Date:Tue, 13 Dec 2016 03:22:13 GMT
+----
+
+=== 验签规则
+为防止黑客伪造交易结果给商户造成损失，PayingCloud对所有发给商户的交易结果异步通知都进行了RSA签名，并将签名进行Base64编码后放在Http请求头 kbd:[*sign*] 中，开发者需要使用SHA1WithRSA算法和PayingCloud提供的RSA公钥对其进行验证： +
+
+.代码示例
+[source,Java]
+----
+// 从异步通知请求头中获取签名
+String sign = request.getHeader("sign");
+// 对签名Base64解码
+byte[] signBytes = Base64.decodeBase64(sign)
+// 获取异步通知请求体
+String content = ...
+// 对请求体进行UTF-8字符解码
+byte[] contentBytes = content.getBytes("UTF-8")
+// 采用SHA1WithRSA算法进行验证
+KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+byte[] encodedKey = Base64.decodeBase64(PayingCloud.DEFAULT_PUBLIC_KEY); // 使用PayingCloud提供的RSA公钥
+PublicKey key = keyFactory.generatePublic(new X509EncodedKeySpec(encodedKey));
+Signature signature = Signature.getInstance("SHA1WithRSA"); // 验签算法SHA1WithRSA
+signature.initVerify(key);
+signature.update(contentBytes);
+return signature.verify(signBytes);
+----
+
+.PayingCloud RSA公钥
+[source,PublicKey]
+----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPymtLbRkHgvVfUT933LrwWns6YZHLPpT1pP9TKJ+cgIZiQwZ4mtqoqPHSVtiT5HA8fwFzWuJ/6qWaQhER7TOISUFUHZlHyBjNK/Z5px6PNB7rT4OrLP0KuZ7nuX5qdnOKuAbrj1MBLSinOHQ8tDJhPrPKxuZlKw3SeL5auHlKWwIDAQAB
 ----
 
 == API接口
