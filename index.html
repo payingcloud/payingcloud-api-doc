@@ -517,8 +517,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Paid API 文档</h1>
 <div class="details">
 <span id="author" class="author">paid</span><br>
-<span id="revnumber">version 0.3,</span>
-<span id="revdate">2017-05-19</span>
+<span id="revnumber">version 0.4,</span>
+<span id="revdate">2017-06-09</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">目录</div>
@@ -534,10 +534,11 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_付款接口">2.1. 付款接口</a>
 <ul class="sectlevel3">
-<li><a href="#_请求方式">2.1.1. 请求方式</a></li>
-<li><a href="#_请求参数">2.1.2. 请求参数</a></li>
-<li><a href="#_同步返回参数">2.1.3. 同步返回参数</a></li>
-<li><a href="#_异步通知参数">2.1.4. 异步通知参数</a></li>
+<li><a href="#_接口概述">2.1.1. 接口概述</a></li>
+<li><a href="#_请求方式">2.1.2. 请求方式</a></li>
+<li><a href="#_请求参数">2.1.3. 请求参数</a></li>
+<li><a href="#_同步返回参数">2.1.4. 同步返回参数</a></li>
+<li><a href="#_异步通知参数">2.1.5. 异步通知参数</a></li>
 </ul>
 </li>
 <li><a href="#_退款接口">2.2. 退款接口</a>
@@ -602,6 +603,10 @@ table.CodeRay td.code>pre{padding:0}
 <li>
 <p>2017-5-19<br>
 添加多个银行支付渠道</p>
+</li>
+<li>
+<p>2017-6-9<br>
+添加支付流程图</p>
 </li>
 </ul>
 </div>
@@ -716,7 +721,18 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <div class="sect2">
 <h3 id="_付款接口"><a class="anchor" href="#_付款接口"></a>2.1. 付款接口</h3>
 <div class="sect3">
-<h4 id="_请求方式"><a class="anchor" href="#_请求方式"></a>2.1.1. 请求方式</h4>
+<h4 id="_接口概述"><a class="anchor" href="#_接口概述"></a>2.1.1. 接口概述</h4>
+<div class="paragraph">
+<p>支付流程如下图所示:<br></p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/payment-flowchart.png" alt="payment flowchart">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_请求方式"><a class="anchor" href="#_请求方式"></a>2.1.2. 请求方式</h4>
 <div class="listingblock">
 <div class="content">
 <pre>POST /charges</pre>
@@ -724,7 +740,7 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_请求参数"><a class="anchor" href="#_请求参数"></a>2.1.2. 请求参数</h4>
+<h4 id="_请求参数"><a class="anchor" href="#_请求参数"></a>2.1.3. 请求参数</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16%;">
@@ -798,14 +814,8 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">metadata</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String(512)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">{"goods_id":"iphone6s_32G",
-  "wxpay_goods_id":"1002",
-  "goods_name":"iPhone6s 32G",
-  "quantity":1,
-  "price":608800,
-  "goods_category":"123789",
-  "body":"苹果手机"}</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">将原样返回的数据，如是类似json格式的数据也必须转换为字符串模式，例如最外层加双引号</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">异步通知地址</p></td>
@@ -819,7 +829,7 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_同步返回参数"><a class="anchor" href="#_同步返回参数"></a>2.1.3. 同步返回参数</h4>
+<h4 id="_同步返回参数"><a class="anchor" href="#_同步返回参数"></a>2.1.4. 同步返回参数</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16%;">
@@ -901,14 +911,8 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">metadata</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String(512)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">{"goods_id":"iphone6s_32G",
-  "wxpay_goods_id":"1002",
-  "goods_name":"iPhone6s 32G",
-  "quantity":1,
-  "price":608800,
-  "goods_category":"123789",
-  "body":"苹果手机"}</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">将原样返回的数据</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">交易凭证</p></td>
@@ -970,7 +974,7 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_异步通知参数"><a class="anchor" href="#_异步通知参数"></a>2.1.4. 异步通知参数</h4>
+<h4 id="_异步通知参数"><a class="anchor" href="#_异步通知参数"></a>2.1.5. 异步通知参数</h4>
 <table id="订单异步通知参数" class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16%;">
@@ -1052,14 +1056,8 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">metadata</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String(512)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">{"goods_id":"iphone6s_32G",
-    "wxpay_goods_id":"1002",
-    "goods_name":"iPhone6s 32G",
-    "quantity":1,
-    "price":608800,
-    "goods_category":"123789",
-    "body":"苹果手机"}</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">元数据，用于携带自定义数据,原样返回</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">状态</p></td>
@@ -1182,13 +1180,7 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">metadata</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String(512)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">{"goods_id":"iphone6s_32G",
-    "wxpay_goods_id":"1002",
-    "goods_name":"iPhone6s 32G",
-    "quantity":1,
-    "price":608800,
-    "goods_category":"123789",
-    "body":"苹果手机"}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式</p></td>
 </tr>
 <tr>
@@ -1277,14 +1269,8 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">metadata</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String(512)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">{"goods_id":"iphone6s_32G",
-    "wxpay_goods_id":"1002",
-    "goods_name":"iPhone6s 32G",
-    "quantity":1,
-    "price":608800,
-    "goods_category":"123789",
-    "body":"苹果手机"}</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">元数据，用于携带自定义数据,原样返回</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">状态</p></td>
@@ -1818,12 +1804,8 @@ servletResponse.getWriter().write(charge.getCredentials().get(<span class="strin
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CREATED</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">已创建</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>STARTED</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">开始处理</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">支付开始（即支付中）</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>SUCCEEDED</strong></p></td>
@@ -1851,12 +1833,8 @@ servletResponse.getWriter().write(charge.getCredentials().get(<span class="strin
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>CREATED</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">已创建</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>STARTED</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">开始处理</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">退款开始</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>SUCCEEDED</strong></p></td>
@@ -1884,8 +1862,8 @@ servletResponse.getWriter().write(charge.getCredentials().get(<span class="strin
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.3<br>
-Last updated 2017-06-09 10:48:47 +08:00
+Version 0.4<br>
+Last updated 2017-06-09 12:02:55 +08:00
 </div>
 </div>
 </body>

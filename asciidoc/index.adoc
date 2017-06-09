@@ -1,6 +1,6 @@
 = Paid API 文档
 paid
-v0.3, 2017-05-19
+v0.4, 2017-06-09
 :doctype: article
 :description: PayingCloud 聚合支付 API
 :keywords: PayingCloud,聚合支付,API
@@ -31,6 +31,8 @@ v0.3, 2017-05-19
 修改部分错误描述
 * 2017-5-19 +
 添加多个银行支付渠道
+* 2017-6-9 +
+添加支付流程图
 
 === 全局规则
 
@@ -97,6 +99,11 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT
 
 === 付款接口
 
+==== 接口概述
+支付流程如下图所示: +
+
+image::payment-flowchart.png[scaledwidth=100%,align="center"]
+
 ==== 请求方式
 ----
 POST /charges
@@ -153,14 +160,8 @@ POST /charges
 | metadata
 | 否
 | String(512)
-| {"goods_id":"iphone6s_32G",
-  "wxpay_goods_id":"1002",
-  "goods_name":"iPhone6s 32G",
-  "quantity":1,
-  "price":608800,
-  "goods_category":"123789",
-  "body":"苹果手机"}
-| 将原样返回的数据，如是类似json格式的数据也必须转换为字符串模式，例如最外层加双引号
+| ...
+| 元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式
 
 | 异步通知地址
 | notifyUrl
@@ -229,14 +230,8 @@ POST /charges
 | metadata
 | 否
 | String(512)
-| {"goods_id":"iphone6s_32G",
-  "wxpay_goods_id":"1002",
-  "goods_name":"iPhone6s 32G",
-  "quantity":1,
-  "price":608800,
-  "goods_category":"123789",
-  "body":"苹果手机"}
-| 将原样返回的数据
+|
+| 元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式
 
 | 交易凭证
 | credentials
@@ -349,14 +344,8 @@ POST /charges
 | metadata
 | 否
 | String(512)
-| {"goods_id":"iphone6s_32G",
-    "wxpay_goods_id":"1002",
-    "goods_name":"iPhone6s 32G",
-    "quantity":1,
-    "price":608800,
-    "goods_category":"123789",
-    "body":"苹果手机"}
-| 元数据，用于携带自定义数据,原样返回
+| ...
+| 元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式
 
 | 状态
 | status
@@ -445,13 +434,7 @@ POST /refunds
 | metadata
 | 否
 | String(512)
-| {"goods_id":"iphone6s_32G",
-    "wxpay_goods_id":"1002",
-    "goods_name":"iPhone6s 32G",
-    "quantity":1,
-    "price":608800,
-    "goods_category":"123789",
-    "body":"苹果手机"}
+| ...
 | 元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式
 
 | 异步通知地址
@@ -515,14 +498,8 @@ POST /refunds
 | metadata
 | 否
 | String(512)
-| {"goods_id":"iphone6s_32G",
-    "wxpay_goods_id":"1002",
-    "goods_name":"iPhone6s 32G",
-    "quantity":1,
-    "price":608800,
-    "goods_category":"123789",
-    "body":"苹果手机"}
-| 元数据，用于携带自定义数据,原样返回
+| ...
+| 元数据，用于携带自定义数据,原样返回,如类似json数据也必须转换为字符串格式
 
 | 状态
 | status
@@ -817,11 +794,8 @@ servletResponse.getWriter().write(charge.getCredentials().get("html"));
 |===
 | 参数名 | 含义
 
-| *CREATED*
-| 已创建
-
 | *STARTED*
-| 开始处理
+| 支付开始（即支付中）
 
 | *SUCCEEDED*
 | 支付成功
@@ -837,11 +811,8 @@ servletResponse.getWriter().write(charge.getCredentials().get("html"));
 |===
 | 参数名 | 含义
 
-| *CREATED*
-| 已创建
-
 | *STARTED*
-| 开始处理
+| 退款开始
 
 | *SUCCEEDED*
 | 退款成功
