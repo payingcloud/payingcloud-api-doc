@@ -183,7 +183,7 @@ POST /charges
 | extra
 | 否
 | Map<String, String>
-| "returnUrl","https://api.payingcloud.cn/returnUrl"
+| {"returnUrl": "https://api.payingcloud.cn/returnUrl"}
 | 用键值对的map存储不同渠道之间的<<渠道额外参数>>
 
 | 元数据
