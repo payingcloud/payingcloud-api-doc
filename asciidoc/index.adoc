@@ -36,6 +36,7 @@ v0.3, 2017-05-19
 
 * 服务器地址为 \https://api.payingcloud.cn
 * 数据传输类型为 json
+* 异步通知接口处理完成返回success
 
 === 签名规则
 
