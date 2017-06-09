@@ -125,7 +125,7 @@ POST /charges
 | subject
 | 是
 | String(32)
-| 测试商品名称-123456
+| iPhone7-32G
 | 展示在收银台的商品名称
 
 | 收款金额
@@ -195,7 +195,7 @@ POST /charges
 | subject
 | 是
 | String(32)
-| 测试商品名称-123456
+| iPhone7-32G
 | 商品名称
 
 | 备注
