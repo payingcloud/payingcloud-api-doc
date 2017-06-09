@@ -939,36 +939,20 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">发生错误时的错误描述参数</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">创建时间</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">createdAt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">是</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">创建退款单的时间，从1970年1月1日00：00至今的毫秒时间</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">开始时间</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">startedAt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">退款申请成功的时间，从1970年1月1日00：00至今的毫秒时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">从1970年1月1日00：00至今的毫秒时间</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">成功时间</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">succeededAt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">完成时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">completedAt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">退款成功时间，从1970年1月1日00：00至今的毫秒时间</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">失败时间</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">failedAt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">订单关闭没有后续操作的时间，从1970年1月1日00：00至今的毫秒时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">从1970年1月1日00：00至今的毫秒时间。成功或失败时有值</p></td>
 </tr>
 </tbody>
 </table>
@@ -1016,13 +1000,13 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">subject</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">是</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String(32)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">测试商品-12314</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iPhone7-32G</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">商品名称</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">备注</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">remark</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">否17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String(1000)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">退单备注：1.XXXXXXXXX,2.XXXXXXXXX</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">退单备注</p></td>
@@ -1076,14 +1060,6 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">发生错误时的错误描述参数</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">创建时间</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">createdAt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">是</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">创建退款单的时间，从1970年1月1日00：00至今的毫秒时间</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">开始时间</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">startedAt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
@@ -1092,20 +1068,12 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">退款申请成功的时间，从1970年1月1日00：00至今的毫秒时间</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">成功时间</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">succeededAt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">完成时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">completedAt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">退款成功时间，从1970年1月1日00：00至今的毫秒时间</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">失败时间</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">failedAt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">订单关闭没有后续操作的时间，从1970年1月1日00：00至今的毫秒时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">从1970年1月1日00：00至今的毫秒时间。成功或失败时有值</p></td>
 </tr>
 </tbody>
 </table>
@@ -1289,14 +1257,6 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">发生错误时的错误描述参数</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">创建时间</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">createdAt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">是</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">创建退款单的时间，从1970年1月1日00：00至今的毫秒时间</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">开始时间</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">startedAt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
@@ -1305,20 +1265,12 @@ Date:Tue, 13 Dec 2016 03:22:13 GMT</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">退款申请成功的时间，从1970年1月1日00：00至今的毫秒时间</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">成功时间</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">succeededAt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">完成时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">completedAt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">退款成功时间，从1970年1月1日00：00至今的毫秒时间</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">失败时间</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">failedAt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1482389429010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">订单关闭没有后续操作的时间，从1970年1月1日00：00至今的毫秒时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">从1970年1月1日00：00至今的毫秒时间。成功或失败时有值</p></td>
 </tr>
 </tbody>
 </table>
@@ -1863,7 +1815,7 @@ servletResponse.getWriter().write(charge.getCredentials().get(<span class="strin
 <div id="footer">
 <div id="footer-text">
 Version 0.4<br>
-Last updated 2017-06-09 12:02:55 +08:00
+Last updated 2017-06-09 12:16:12 +08:00
 </div>
 </div>
 </body>
